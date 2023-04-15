@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogMovementController : MonoBehaviour
+
+
+public class DogController : MonoBehaviour
 {
     GameObject Owner;
-    bool IsFound;
-    bool IsFollowing;
-    bool IsControlled;
+
+    public bool IsFound;
+    public bool IsFollowing;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +17,6 @@ public class DogMovementController : MonoBehaviour
         Owner = GameObject.FindGameObjectWithTag("Player");
         IsFound = false;
         IsFollowing = false;
-        IsControlled = false;
     }
 
     // Update is called once per frame
@@ -25,10 +26,6 @@ public class DogMovementController : MonoBehaviour
         {
             transform.position = new Vector3(Owner.transform.position.x-2, Owner.transform.position.y+1, Owner.transform.position.z-2);
             transform.rotation = Owner.transform.rotation;
-        }
-        else if (IsControlled)
-        {
-
         }
         else if (!IsFound && Vector3.Distance(Owner.transform.position, transform.position) < 1)
         {

@@ -21,25 +21,28 @@ public class CharacterSwap : MonoBehaviour
     private PlayerInput _characterInput;
     private PlayerInput _dogInput;
 
+    private DogController _dogController;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Character Swap Start");
+        // Set starting character to owner
         current = Character.Owner;
+        // Collect references to input components for later swapping
         _input = character.GetComponent<StarterAssetsInputs>();
         _characterInput = character.GetComponent<PlayerInput>();
         _dogInput = dog.GetComponent<PlayerInput>();
-
+        _dogController = dog.GetComponent<DogController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_input.swap)
+        if (_input.swap && _dogController.IsFound)
         {
             Debug.Log("Character Swap script");
-            if (current  == Character.Owner)
+            if (current == Character.Owner)
             {
                 current = Character.Dog;
                 _input = dog.GetComponent<StarterAssetsInputs>();
@@ -53,24 +56,27 @@ public class CharacterSwap : MonoBehaviour
             }
             _input.swap = false;
         }
-        
-        
     }
 
-    public void Swap(Character current)
+    void Swap(Character current)
     {
         if (current == Character.Dog)
         {
             Debug.Log("Swapping to dog");
+            // Swap input
             _characterInput.enabled = false;
             _dogInput.enabled = true;
+            // Refocus camera on new player character
             camera.LookAt = dog.transform;
             camera.Follow = dog.transform;
         }
         else 
         {
+            Debug.Log("Swapping to owner");
+            // Swap input
             _dogInput.enabled = false;
             _characterInput.enabled = true;
+            // Refocus camera on new player character
             camera.LookAt = character.transform;
             camera.Follow = character.transform;
         }

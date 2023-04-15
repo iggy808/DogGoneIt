@@ -21,6 +21,8 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+		public DogController _dogController;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
@@ -47,7 +49,10 @@ namespace StarterAssets
 
 		public void OnSwap(InputValue value)
 		{
-			SwapInput(value.isPressed);
+			if (_dogController.IsFound)
+			{
+				SwapInput(value.isPressed);
+			}
 		}
 
 #endif
