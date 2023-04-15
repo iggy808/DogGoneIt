@@ -130,7 +130,7 @@ CharacterController:
   m_Enabled: 0
   serializedVersion: 2
   m_Height: 1
-  m_Radius: 0.5
+  m_Radius: 0.16
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -160,8 +160,8 @@ MonoBehaviour:
   JumpTimeout: 0.5
   FallTimeout: 0.15
   Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
+  GroundedOffset: 0.22
+  GroundedRadius: 0.95
   GroundLayers:
     serializedVersion: 2
     m_Bits: 513
@@ -204,6 +204,7 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   swap: 0
+  CanJump: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
