@@ -20,11 +20,8 @@ public class CharacterSwap : MonoBehaviour
     private StarterAssetsInputs _input;
     private PlayerInput _characterInput;
     private PlayerInput _dogInput;
-
     private DogController _dogController;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         // Set starting character to owner
@@ -36,12 +33,10 @@ public class CharacterSwap : MonoBehaviour
         _dogController = dog.GetComponent<DogController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (_input.swap && _dogController.IsFound)
+        if (_input.swap)
         {
-            Debug.Log("Character Swap script");
             if (current == Character.Owner)
             {
                 current = Character.Dog;
@@ -69,6 +64,8 @@ public class CharacterSwap : MonoBehaviour
             // Refocus camera on new player character
             camera.LookAt = dog.transform;
             camera.Follow = dog.transform;
+            // Disable dog follow
+            _dogController.enabled = false;
         }
         else 
         {
@@ -79,6 +76,8 @@ public class CharacterSwap : MonoBehaviour
             // Refocus camera on new player character
             camera.LookAt = character.transform;
             camera.Follow = character.transform;
+            // Enable dog follow
+            _dogController.enabled = true;
         }
     }
 }
