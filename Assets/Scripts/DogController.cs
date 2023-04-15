@@ -32,12 +32,6 @@ public class DogController : MonoBehaviour
             transform.position = new Vector3(Owner.transform.position.x-2, Owner.transform.position.y+1, Owner.transform.position.z-2);
             transform.rotation = Owner.transform.rotation;
         }
-        else if (IsControlled)
-        {
-            IsFollowing = false;
-            characterController.enabled = true;
-            this.enabled = false;
-        }
         else if (!IsFound && Vector3.Distance(Owner.transform.position, transform.position) < 1)
         {
             IsFollowing = true;

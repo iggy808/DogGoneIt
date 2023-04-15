@@ -13,6 +13,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool swap;
+		public bool talk;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -22,6 +23,7 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 		public DogController _dogController;
+		public PlayerInteractionManager _interactionManager;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
@@ -55,6 +57,14 @@ namespace StarterAssets
 			}
 		}
 
+		public void OnTalk(InputValue value)
+		{
+			if (_interactionManager.CanTalkWithOldMan)
+			{
+				TalkInput(value.isPressed);
+			}
+		}
+
 #endif
 
 
@@ -82,6 +92,12 @@ namespace StarterAssets
 		{
 			Debug.Log("Swapping");
 			swap = newSwapState;
+		}
+
+		public void TalkInput(bool newTalkState)
+		{
+			Debug.Log("Talkin");
+			talk = newTalkState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
