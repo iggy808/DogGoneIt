@@ -1315,6 +1315,7 @@ MonoBehaviour:
   character: {fileID: 4416926083347132227}
   dog: {fileID: 1372955248}
   current: 0
+  camera: {fileID: 2070925443028286826}
 --- !u!1 &733642825
 GameObject:
   m_ObjectHideFlags: 0

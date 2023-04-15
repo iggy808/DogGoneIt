@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class CharacterSwap : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CharacterSwap : MonoBehaviour
     public GameObject character;
     public GameObject dog;
     public Character current;
+    public CinemachineVirtualCamera camera;
 
     private StarterAssetsInputs _input;
     private PlayerInput _characterInput;
@@ -62,11 +64,15 @@ public class CharacterSwap : MonoBehaviour
             Debug.Log("Swapping to dog");
             _characterInput.enabled = false;
             _dogInput.enabled = true;
+            camera.LookAt = dog.transform;
+            camera.Follow = dog.transform;
         }
         else 
         {
             _dogInput.enabled = false;
             _characterInput.enabled = true;
+            camera.LookAt = character.transform;
+            camera.Follow = character.transform;
         }
     }
 }
