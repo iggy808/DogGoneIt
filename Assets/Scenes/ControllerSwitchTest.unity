@@ -1284,7 +1284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &732491212
 Transform:
   m_ObjectHideFlags: 0
@@ -1312,11 +1312,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba3ec67c073776409fcc75af9e55b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
-  possibleCharacters:
-  - {fileID: 3893294199639930361}
-  - {fileID: 1372955255}
-  whichCharacter: 0
+  character: {fileID: 4416926083347132227}
+  dog: {fileID: 1372955248}
+  current: 0
 --- !u!1 &733642825
 GameObject:
   m_ObjectHideFlags: 0
