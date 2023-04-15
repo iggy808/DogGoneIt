@@ -21,6 +21,7 @@ public class CharacterSwap : MonoBehaviour
     private PlayerInput _characterInput;
     private PlayerInput _dogInput;
     private DogController _dogController;
+    private CharacterController _dogCharacterController;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class CharacterSwap : MonoBehaviour
         _characterInput = character.GetComponent<PlayerInput>();
         _dogInput = dog.GetComponent<PlayerInput>();
         _dogController = dog.GetComponent<DogController>();
+        _dogCharacterController = dog.GetComponent<CharacterController>();
     }
 
     void Update()
@@ -66,6 +68,7 @@ public class CharacterSwap : MonoBehaviour
             camera.Follow = dog.transform;
             // Disable dog follow
             _dogController.enabled = false;
+            _dogCharacterController.enabled = true;
         }
         else 
         {
@@ -78,6 +81,7 @@ public class CharacterSwap : MonoBehaviour
             camera.Follow = character.transform;
             // Enable dog follow
             _dogController.enabled = true;
+            _dogCharacterController.enabled = false;
         }
     }
 }
