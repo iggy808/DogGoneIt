@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -13,6 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool swap;
+		public bool CanJump;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -22,6 +24,7 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 		public DogController _dogController;
+
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
@@ -39,6 +42,8 @@ namespace StarterAssets
 
 		public void OnJump(InputValue value)
 		{
+			if (gameObject.tag == "Dog")
+				return;
 			JumpInput(value.isPressed);
 		}
 
@@ -70,6 +75,7 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
+			Debug.Log("Jump pressed by " + gameObject.tag);
 			jump = newJumpState;
 		}
 
