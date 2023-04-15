@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsFound: 0
   IsFollowing: 0
-  IsControlled: 0
+  ForceControl: 0
 --- !u!143 &3312336813553307583
 CharacterController:
   m_ObjectHideFlags: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushLayers:
     serializedVersion: 2
-    m_Bits: 0
-  canPush: 0
+    m_Bits: 1024
+  canPush: 1
   strength: 1.1
 --- !u!114 &3312336813553307581
 MonoBehaviour:
