@@ -6,26 +6,29 @@ using UnityEngine.InputSystem;
 
 public class CharacterSwap : MonoBehaviour
 {
-
-    public Transform character;
-    public List<Transform> possibleCharacters;
-    public int whichCharacter;
+    public enum Character
+    {
+        Owner,
+        Dog
+    }
+    public GameObject character;
+    public GameObject dog;
+    public Character current;
 
     private StarterAssetsInputs _input;
-    private PlayerInput _playerInput;
+    private PlayerInput _characterInput;
+    private PlayerInput _dogInput;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Character Swap Start");
-        if (character == null && possibleCharacters.Count >= 1)
-        {
-            character = possibleCharacters[0];
-            _input = character.GetComponent<StarterAssetsInputs>();
-            _playerInput = GetComponent<PlayerInput>();
-        }
-        Swap();
+        current = Character.Owner;
+        _input = character.GetComponent<StarterAssetsInputs>();
+        _characterInput = character.GetComponent<PlayerInput>();
+        _dogInput = dog.GetComponent<PlayerInput>();
+
     }
 
     // Update is called once per frame
@@ -34,29 +37,36 @@ public class CharacterSwap : MonoBehaviour
         if (_input.swap)
         {
             Debug.Log("Character Swap script");
-            if (whichCharacter  == 0)
+            if (current  == Character.Owner)
             {
-                whichCharacter = possibleCharacters.Count - 1;
+                current = Character.Dog;
+                _input = dog.GetComponent<StarterAssetsInputs>();
+                Swap(current);
             }
             else
             {
-                whichCharacter -= 1;
+                current = Character.Owner;
+                _input = character.GetComponent<StarterAssetsInputs>();
+                Swap(current);
             }
-            Swap();
+            _input.swap = false;
         }
+        
         
     }
 
-    public void Swap()
+    public void Swap(Character current)
     {
-        character = possibleCharacters[whichCharacter];
-        character.GetComponent<ThirdPersonController>().enabled = true;
-        for (int i = 0; i < possibleCharacters.Count; i++)
+        if (current == Character.Dog)
         {
-            if (possibleCharacters[i] != character)
-            {
-                possibleCharacters[i].GetComponent<ThirdPersonController>().enabled = false;
-            }
+            Debug.Log("Swapping to dog");
+            _characterInput.enabled = false;
+            _dogInput.enabled = true;
+        }
+        else 
+        {
+            _dogInput.enabled = false;
+            _characterInput.enabled = true;
         }
     }
 }
