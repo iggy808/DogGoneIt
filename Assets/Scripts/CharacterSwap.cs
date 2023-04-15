@@ -12,46 +12,67 @@ public class CharacterSwap : MonoBehaviour
         Owner,
         Dog
     }
-    public GameObject character;
-    public GameObject dog;
-    public Character current;
+
+    public GameObject Owner;
+    public GameObject Dog;
+    public Character Current;
     public CinemachineVirtualCamera camera;
 
-    private StarterAssetsInputs _input;
-    private PlayerInput _characterInput;
-    private PlayerInput _dogInput;
-    private DogController _dogController;
-    private CharacterController _dogCharacterController;
+    // Input references necessary for swap
+    StarterAssetsInputs _currentInputController;
+    StarterAssetsInputs _ownerInputController;
+    StarterAssetsInputs _dogInputController;
+    PlayerInput _ownerInput;
+    PlayerInput _dogInput;
+
+    // Dog components necessary for swap
+    DogController _dogController;
+    CharacterController _dogCharacterController;
+    ThirdPersonController _dogThirdPerson;
+
+    // Owner components necessary for swap
+    CharacterController _ownerCharacterController;
+    ThirdPersonController _ownerThirdPerson;
+
 
     void Start()
     {
+        // Stash core gameobject references
+        Owner = GameObject.FindGameObjectWithTag("Player");
+        Dog = GameObject.FindGameObjectWithTag("Dog");
         // Set starting character to owner
-        current = Character.Owner;
-        // Collect references to input components for later swapping
-        _input = character.GetComponent<StarterAssetsInputs>();
-        _characterInput = character.GetComponent<PlayerInput>();
-        _dogInput = dog.GetComponent<PlayerInput>();
-        _dogController = dog.GetComponent<DogController>();
-        _dogCharacterController = dog.GetComponent<CharacterController>();
+        Current = Character.Owner;
+        // Collect references to input components necessary for swapping
+        // Owner references
+        _ownerInput = Owner.GetComponent<PlayerInput>();
+        _ownerInputController = Owner.GetComponent<StarterAssetsInputs>();
+        _ownerCharacterController = Owner.GetComponent<CharacterController>();
+        _ownerThirdPerson = Owner.GetComponent<ThirdPersonController>();
+        // Dog references
+        _dogInput = Dog.GetComponent<PlayerInput>();
+        _dogInputController = Dog.GetComponent<StarterAssetsInputs>();
+        _dogCharacterController = Dog.GetComponent<CharacterController>();
+        _dogThirdPerson = Dog.GetComponent<ThirdPersonController>();
+        _dogController = Dog.GetComponent<DogController>();
+        
+        // Set owner input controller for starting the game
+        _currentInputController = _ownerInputController;
     }
 
     void Update()
     {
-        if (_input.swap)
+        if (_currentInputController.swap)
         {
-            if (current == Character.Owner)
+            if (Current == Character.Owner)
             {
-                current = Character.Dog;
-                _input = dog.GetComponent<StarterAssetsInputs>();
-                Swap(current);
+                Current = Character.Dog;
+                Swap(Current);
             }
             else
             {
-                current = Character.Owner;
-                _input = character.GetComponent<StarterAssetsInputs>();
-                Swap(current);
+                Current = Character.Owner;
+                Swap(Current);
             }
-            _input.swap = false;
         }
     }
 
@@ -61,27 +82,43 @@ public class CharacterSwap : MonoBehaviour
         {
             Debug.Log("Swapping to dog");
             // Swap input
-            _characterInput.enabled = false;
+            _ownerInput.enabled = false;
             _dogInput.enabled = true;
+            // Swap third person controllers controllers
+            _ownerThirdPerson.enabled = false;
+            _dogThirdPerson.enabled = true;
             // Refocus camera on new player character
-            camera.LookAt = dog.transform;
-            camera.Follow = dog.transform;
+            camera.LookAt = Dog.transform;
+            camera.Follow = Dog.transform;
             // Disable dog follow
             _dogController.enabled = false;
+            // Swap character controllers
+            _ownerCharacterController.enabled = false;
             _dogCharacterController.enabled = true;
+            // Swap input controllers
+            _currentInputController.swap = false;
+            _currentInputController = _dogInputController;
         }
         else 
         {
             Debug.Log("Swapping to owner");
             // Swap input
             _dogInput.enabled = false;
-            _characterInput.enabled = true;
+            _ownerInput.enabled = true;
+            // Swap third person controllers controllers
+            _dogThirdPerson.enabled = false;
+            _ownerThirdPerson.enabled = true;
             // Refocus camera on new player character
-            camera.LookAt = character.transform;
-            camera.Follow = character.transform;
+            camera.LookAt = Owner.transform;
+            camera.Follow = Owner.transform;
+            // Swap character controllers
+            _dogCharacterController.enabled = false;
+            _ownerCharacterController.enabled = true;
             // Enable dog follow
             _dogController.enabled = true;
-            _dogCharacterController.enabled = false;
+            // Swap input controllers
+            _currentInputController.swap = false;
+            _currentInputController = _ownerInputController;
         }
     }
 }
