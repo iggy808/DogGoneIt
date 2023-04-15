@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 
 
@@ -8,6 +9,7 @@ public class DogController : MonoBehaviour
 {
     GameObject Owner;
     CharacterController characterController;
+    ThirdPersonController thirdPerson;
 
     public bool IsFound;
     public bool IsFollowing;
@@ -18,10 +20,13 @@ public class DogController : MonoBehaviour
     {
         Owner = GameObject.FindGameObjectWithTag("Player");
         characterController = GetComponent<CharacterController>();
+        thirdPerson = GetComponent<ThirdPersonController>();
+
         characterController.enabled = false;
+        thirdPerson.enabled = false;
+
         IsFound = false;
         IsFollowing = false;
-        IsControlled = false;
     }
 
     // Update is called once per frame
@@ -31,12 +36,6 @@ public class DogController : MonoBehaviour
         {
             transform.position = new Vector3(Owner.transform.position.x-2, Owner.transform.position.y+1, Owner.transform.position.z-2);
             transform.rotation = Owner.transform.rotation;
-        }
-        else if (IsControlled)
-        {
-            IsFollowing = false;
-            characterController.enabled = true;
-            this.enabled = false;
         }
         else if (!IsFound && Vector3.Distance(Owner.transform.position, transform.position) < 1)
         {
