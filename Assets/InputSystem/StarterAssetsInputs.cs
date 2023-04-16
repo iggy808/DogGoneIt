@@ -14,7 +14,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool swap;
-		public bool CanJump;
+		public bool attack;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -60,6 +60,11 @@ namespace StarterAssets
 			}
 		}
 
+		public void OnAttack(InputValue value)
+		{
+			AttackInput(value.isPressed);
+		}
+
 #endif
 
 
@@ -88,6 +93,11 @@ namespace StarterAssets
 		{
 			Debug.Log("Swapping");
 			swap = newSwapState;
+		}
+
+		public void AttackInput(bool newAttackState)
+		{
+			attack = newAttackState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)

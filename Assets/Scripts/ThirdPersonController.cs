@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using System.Collections;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -75,6 +76,9 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+
+        public bool isAttacking = false;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -105,6 +109,8 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+
+        //BoxCollider playerHitbox;
 
         private const float _threshold = 0.01f;
 
@@ -139,8 +145,10 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+            //playerHitbox = GameObject.FindGameObjectWithTag("Hitbox").GetComponent<BoxCollider>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             _playerInput = GetComponent<PlayerInput>();
+            
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
@@ -150,6 +158,7 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
         }
 
         private void Update()
@@ -159,6 +168,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Attack();
         }
 
         private void LateUpdate()
@@ -277,6 +287,41 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+        }
+
+        private void Attack()
+        {
+            if (gameObject.tag == "Dog")
+            {
+                return;
+            }
+            if (_input.attack)
+            {
+                Debug.Log("Attack");
+                // Set hitbox to active
+                //playerHitbox.enabled = true;
+                if (_hasAnimator && !isAttacking)
+                {
+                    _animator.SetTrigger("Punch");
+                    isAttacking = true;
+                    StartCoroutine(ChangeAttackBool());
+                    Debug.Log("Punch Animation");
+                }
+            }
+            _input.attack = false;
+        }
+
+        IEnumerator ChangeAttackBool()
+        {
+            yield return new WaitForSeconds(3.0f);
+            isAttacking = false;
+            
+        }
+
+        public void FinishAttack()
+        {
+            Debug.Log("Finish Attack");
+            isAttacking = false;
         }
 
         private void JumpAndGravity()
