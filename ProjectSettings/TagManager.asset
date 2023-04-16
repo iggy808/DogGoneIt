@@ -6,6 +6,12 @@ TagManager:
   tags:
   - CinemachineTarget
   - Dog
+  - Ramp1
+  - OwnerToDogTrigger
+  - GameManager
+  - FollowCam
+  - Ramp2
+  - Ramp3
   layers:
   - Default
   - TransparentFX
