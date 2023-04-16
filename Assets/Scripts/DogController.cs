@@ -13,7 +13,6 @@ public class DogController : MonoBehaviour
 
     public bool IsFound;
     public bool IsFollowing;
-    public bool ForceControl;
 
     // Start is called before the first frame update
     void Start()
@@ -37,13 +36,9 @@ public class DogController : MonoBehaviour
             transform.position = new Vector3(Owner.transform.position.x-2, Owner.transform.position.y+1, Owner.transform.position.z-2);
             transform.rotation = Owner.transform.rotation;
         }
-        else if (!IsFound && Vector3.Distance(Owner.transform.position, transform.position) < 1)
+        else if (!IsFound && Vector3.Distance(Owner.transform.position, transform.position) <= 1)
         {
             IsFollowing = true;
-            IsFound = true;
-        }
-        else if (ForceControl)
-        {
             IsFound = true;
         }
     }

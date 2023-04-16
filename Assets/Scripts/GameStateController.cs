@@ -14,23 +14,30 @@ public enum GameState
 public class GameStateController : MonoBehaviour
 {
     public GameState CurrentGameState;
-    CharacterSwap CharacterSwap;
-
     public bool IsOwnerToDogTriggerHit;
     public bool IsDogToOwnerTriggerHit;
     public bool IsSwappedFromSoloDogToOwner;
 
-    // Start is called before the first frame update
+    CharacterSwap CharacterSwap;
+    DogController DogController;
+
+    MeshRenderer DogsBallMeshRenderer;
+    bool DogsBallIsRendered;
+
     void Start()
     {
         CharacterSwap = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CharacterSwap>();
+        DogController = GameObject.FindGameObjectWithTag("Dog").GetComponent<DogController>();
+        DogsBallMeshRenderer = GameObject.FindGameObjectWithTag("DogsBall").GetComponent<MeshRenderer>();
         CurrentGameState = GameState.OwnerSolo_Preforest;
         IsOwnerToDogTriggerHit = false;
         IsDogToOwnerTriggerHit = false;
+        // Flipped to true in character swap script when finishing solo dog section
         IsSwappedFromSoloDogToOwner = false;
+        DogsBallMeshRenderer.enabled = false;
+        DogsBallIsRendered = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsOwnerToDogTriggerHit && !(IsDogToOwnerTriggerHit))
@@ -40,6 +47,16 @@ public class GameStateController : MonoBehaviour
         else if (IsDogToOwnerTriggerHit && !IsSwappedFromSoloDogToOwner)
         {
             CurrentGameState = GameState.OwnerSolo_Forest;
+        }
+        else if (DogController.IsFound)
+        {
+            CurrentGameState = GameState.Reunited;
+            // Prevent continually enabling the DogsBallMeshRenderer
+            if (!DogsBallIsRendered)
+            {
+                DogsBallMeshRenderer.enabled = true;
+                DogsBallIsRendered = true;
+            }
         }
     }
 }

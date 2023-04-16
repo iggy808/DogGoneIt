@@ -90,6 +90,7 @@ public class CharacterSwap : MonoBehaviour
                 if (!GameStateController.IsSwappedFromSoloDogToOwner)
                 {
                     Swap(Character.Owner);
+                    // kinda hacky, but works
                     GameStateController.IsSwappedFromSoloDogToOwner = true;
                 }
                 break;
@@ -113,6 +114,7 @@ public class CharacterSwap : MonoBehaviour
             // Refocus camera on new player character
             if (GameStateController.CurrentGameState == GameState.DogSolo)
             {
+                // Rotate camera for solo dog sequence
                 camera.transform.rotation = new Quaternion(camera.transform.rotation.x,camera.transform.rotation.y * -1,camera.transform.rotation.z,camera.transform.rotation.w);
             }
             camera.LookAt = Dog.transform;

@@ -12,6 +12,7 @@ TagManager:
   - FollowCam
   - Ramp2
   - Ramp3
+  - DogsBall
   layers:
   - Default
   - TransparentFX
