@@ -3278,7 +3278,7 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   swap: 0
-  CanJump: 0
+  attack: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -3344,6 +3344,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  isAttacking: 0
 --- !u!143 &1738504698
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4362,34 +4363,12 @@ Transform:
   m_Father: {fileID: 1549290503}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2085760333 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1257476306536517516, guid: 7897ce98ed9824675a4c02a0dc8d9ab4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1230381015}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2085760335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1257476306536517515, guid: 7897ce98ed9824675a4c02a0dc8d9ab4,
     type: 3}
   m_PrefabInstance: {fileID: 1230381015}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2085760336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085760333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ba75a03642c844edbf65bfae7803ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurrentGameState: 0
-  IsOwnerToDogTriggerHit: 0
-  IsDogToOwnerTriggerHit: 0
-  IsSwappedFromSoloDogToOwner: 0
 --- !u!114 &135756641613574975 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 563924968668085697, guid: 756b54c92984845919b85e3e08bb484f,

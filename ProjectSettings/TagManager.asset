@@ -15,6 +15,12 @@ TagManager:
   - Ramp2
   - Ramp3
   - DogsBall
+  - Deathbox
+  - Checkpoint1
+  - Checkpoint2
+  - Ramp4
+  - Ramp5
+  - Ramp6
   layers:
   - Default
   - TransparentFX
