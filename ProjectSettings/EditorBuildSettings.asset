@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenuScene.unity
     guid: e952190db9a6f446f9eaa89f63462b79
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/NewTerrainAndMechanicsIntegrationTest.unity
     guid: 40363fac79a744886b91bbc01e3e7c9d
+  - enabled: 1
+    path: Assets/Scenes/BackupStable.unity
+    guid: 9c92642436edc4dca97728dac2d06cb4
   - enabled: 1
     path: Assets/Scenes/EndMenuScene.unity
     guid: 2a92fcc4da8894f2d9f0411372efeacd
