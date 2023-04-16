@@ -21,6 +21,8 @@ TagManager:
   - Ramp4
   - Ramp5
   - Ramp6
+  - Undefined
+  - DialogueBox
   layers:
   - Default
   - TransparentFX
