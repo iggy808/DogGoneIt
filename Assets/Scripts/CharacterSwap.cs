@@ -13,10 +13,11 @@ public class CharacterSwap : MonoBehaviour
         Dog
     }
 
-    public GameObject Owner;
-    public GameObject Dog;
+    GameObject Owner;
+    GameObject Dog;
     public Character Current;
     public CinemachineVirtualCamera camera;
+    Quaternion cameraStartingRotation;
 
     // Input references necessary for swap
     StarterAssetsInputs _currentInputController;
@@ -34,12 +35,18 @@ public class CharacterSwap : MonoBehaviour
     CharacterController _ownerCharacterController;
     ThirdPersonController _ownerThirdPerson;
 
+    GameStateController GameStateController;
+
 
     void Start()
     {
         // Stash core gameobject references
         Owner = GameObject.FindGameObjectWithTag("Player");
         Dog = GameObject.FindGameObjectWithTag("Dog");
+        camera = GameObject.FindGameObjectWithTag("FollowCam").GetComponent<CinemachineVirtualCamera>();
+        cameraStartingRotation = camera.transform.rotation;
+        // Track current game state
+        GameStateController = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateController>();
         // Set starting character to owner
         Current = Character.Owner;
         // Collect references to input components necessary for swapping
@@ -61,22 +68,39 @@ public class CharacterSwap : MonoBehaviour
 
     void Update()
     {
-        if (_currentInputController.swap)
+        switch (GameStateController.CurrentGameState)
         {
-            if (Current == Character.Owner)
-            {
-                Current = Character.Dog;
-                Swap(Current);
-            }
-            else
-            {
-                Current = Character.Owner;
-                Swap(Current);
-            }
+            case GameState.Reunited:
+                if (_currentInputController.swap)
+                {
+                    if (Current == Character.Owner)
+                    {
+                        Current = Character.Dog;
+                        Swap(Current);
+                    }
+                    else
+                    {
+                        Current = Character.Owner;
+                        Swap(Current);
+                    }
+                }
+                break;
+            
+            case GameState.OwnerSolo_Forest:
+                if (!GameStateController.IsSwappedFromSoloDogToOwner)
+                {
+                    Swap(Character.Owner);
+                    // kinda hacky, but works
+                    GameStateController.IsSwappedFromSoloDogToOwner = true;
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
-    void Swap(Character current)
+    public void Swap(Character current)
     {
         if (current == Character.Dog)
         {
@@ -88,6 +112,11 @@ public class CharacterSwap : MonoBehaviour
             _ownerThirdPerson.enabled = false;
             _dogThirdPerson.enabled = true;
             // Refocus camera on new player character
+            if (GameStateController.CurrentGameState == GameState.DogSolo)
+            {
+                // Rotate camera for solo dog sequence
+                camera.transform.rotation = new Quaternion(camera.transform.rotation.x,camera.transform.rotation.y * -1,camera.transform.rotation.z,camera.transform.rotation.w);
+            }
             camera.LookAt = Dog.transform;
             camera.Follow = Dog.transform;
             // Disable dog follow
@@ -108,6 +137,10 @@ public class CharacterSwap : MonoBehaviour
             // Swap third person controllers controllers
             _dogThirdPerson.enabled = false;
             _ownerThirdPerson.enabled = true;
+            if (GameStateController.CurrentGameState == GameState.OwnerSolo_Forest)
+            {
+                camera.transform.rotation = cameraStartingRotation;
+            }
             // Refocus camera on new player character
             camera.LookAt = Owner.transform;
             camera.Follow = Owner.transform;

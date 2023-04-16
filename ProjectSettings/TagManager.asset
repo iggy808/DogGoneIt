@@ -8,6 +8,13 @@ TagManager:
   - Dog
   - Enemy
   - Hitbox
+  - Ramp1
+  - OwnerToDogTrigger
+  - GameManager
+  - FollowCam
+  - Ramp2
+  - Ramp3
+  - DogsBall
   layers:
   - Default
   - TransparentFX
