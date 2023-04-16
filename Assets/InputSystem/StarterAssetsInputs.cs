@@ -15,6 +15,7 @@ namespace StarterAssets
 		public bool sprint;
 		public bool swap;
 		public bool attack;
+		public bool dialogueScroll;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -64,6 +65,10 @@ namespace StarterAssets
 		{
 			AttackInput(value.isPressed);
 		}
+		public void OnDialogueScroll(InputValue value)
+		{
+			DialogueScrollInput(value.isPressed);
+		}
 
 #endif
 
@@ -98,6 +103,10 @@ namespace StarterAssets
 		public void AttackInput(bool newAttackState)
 		{
 			attack = newAttackState;
+		}
+		public void DialogueScrollInput(bool newDialogueState)
+		{
+			dialogueScroll = newDialogueState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
