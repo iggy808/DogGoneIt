@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1257476306536517515}
   - component: {fileID: 1257476306536517514}
+  - component: {fileID: 3988240569512085528}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -46,3 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Current: 0
   camera: {fileID: 0}
+--- !u!114 &3988240569512085528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257476306536517516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba75a03642c844edbf65bfae7803ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentGameState: 0
+  IsOwnerToDogTriggerHit: 0
+  IsDogToOwnerTriggerHit: 0
+  IsSwappedFromSoloDogToOwner: 0
